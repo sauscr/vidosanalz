@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--url', type=str, help='Video stream URL или путь к видеофайлу', required=True)
-        parser.add_argument('--interval', type=int, help='Seconds between frames', default=5)
+        parser.add_argument('--interval', type=float, help='Seconds between frames', default=5) #изменил с int на float
         parser.add_argument('--source_type', type=str, choices=['stream', 'file'], default='stream',
                             help='Тип источника: "stream" для RTSP или HTTP-потока, "file" для видеофайла')
 

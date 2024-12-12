@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 try:
-    model = YOLO('yolov8s.pt')  # Автоматически скачает весы, если их нет локально
-    logger.info("Модель YOLOv8s успешно загружена.")
+    model = YOLO('yolov8s.pt')  # Автоматически скачает весы, если их нет локально. Можно так же использовать GPU или CPU YOLO('yolov8s.pt', device='cuda')
+    logger.info("Модель YOLOv8s успешно загружена.")#                                                                     YOLO('yolov8s.pt', device='cpu')
 except Exception as e:
     logger.error(f"Ошибка при загрузке модели YOLOv8s: {e}")
     model = None
@@ -45,8 +45,8 @@ def detect_living_being(frame):
 
     try:
         # YOLOv8 принимает кадр в формате BGR
-        # results = model.predict(frame, conf=0.3)  # Понизили порог уверенности для отладки
-         results = model(frame)  # Получение результатов от модели
+         results = model.predict(frame, conf=0.3, iou=0.45)  # Устанавливаем пороги уверенности и NMS
+        #  results = model(frame)  # Получение результатов от модели
          print("Результаты детекции:", results)
 
     except Exception as e:
@@ -63,8 +63,8 @@ def detect_living_being(frame):
         #         if class_name in TARGET_CLASSES:
         #             detected_classes.append(class_name)
         # Результаты могут быть в виде списка, в котором каждый элемент — это объект
-        for result in results[0].boxes.data:  # Применяем для первого кадра
-            if result[4] > 0.5:  # Если уверенность > 0.5
+        for result in results[0].boxes.data:  # Применяем для первого кадра. result[x] - проверяет каждый x-й кадр
+            if result[4] > 0.1:  # Если уверенность > 0.5; поигрался с коэффициэнтом уверенности
                 detected_classes.append(result[5])  # Добавляем имя класса (последний индекс)
     
     # for result in results:
