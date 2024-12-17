@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import datetime
 from pathlib import Path
 import os
 import environ
@@ -47,14 +48,45 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', 
     'rest_framework', 
     'videoanal',
+    'django_extensions',
+    'channels',
+]
+
+INSTALLED_APPS += ['corsheaders']
+
+ASGI_APPLICATION = 'config.asgi.application'
+
+WSGI_APPLICATION = 'config.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1', 6379)],
+        },
+    },
+
+}
+
+CORS_ALLOW_ALL_ORIGINS = True  # Для разработки, в продакшене ограничь список доменов.
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
 ]
 
 # Настройки для Celery
 CELERY_BROKER_URL = 'CELERY_BROKER_URL'
 CELERY_RESULT_BACKEND = 'CELERY_RESULT_BACKEND'
 
+
 # Media folder для хранения кадров
 MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, f'/media/{datetime.date.today()}')
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Telegram
@@ -70,6 +102,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MIDDLEWARE.insert(0, 'corsheaders.middleware.CorsMiddleware')
 
 ROOT_URLCONF = 'config.urls'
 
@@ -84,6 +117,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
             ],
         },
     },
@@ -145,9 +179,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Yekaterinburg'
 
 USE_I18N = True
 

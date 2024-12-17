@@ -1,0 +1,342 @@
+/* Исходные стили */
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #f5f5f5; /* Светло-серый фон для минимализма */
+    color: #333; /* Тёмно-серый текст для лучшей читабельности */
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    height: 100%;
+}
+
+header {
+    background: #fff; /* Белый фон для чистоты */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Лёгкая тень для отделения от основного контента */
+    position: relative;
+    perspective: 800px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-3d {
+    width: 60px;
+    height: 60px;
+    margin-right: 50px;
+    perspective: 700px;
+    position: relative;
+}
+
+.logo-3d .cube {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotateCube 8s linear infinite alternate;
+}
+
+@keyframes rotateCube {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
+}
+
+.face {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #cccccc; /* Серый цвет */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    border: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    color: #333;
+    font-size: 12px;
+}
+
+.face.front  { transform: translateZ(30px); }
+.face.back   { transform: rotateY(180deg) translateZ(30px); }
+.face.right  { transform: rotateY(90deg) translateZ(30px); }
+.face.left   { transform: rotateY(-90deg) translateZ(30px); }
+.face.top    { transform: rotateX(90deg) translateZ(30px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+}
+
+nav {
+    background: #fff;
+    padding: 15px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    margin: 0 10px;
+    position: relative;
+    perspective: 600px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 70px;
+    position: relative;
+    transition: background 0.3s, color 0.3s, transform 0.3s;
+    background: #e0e0e0; /* Светло-серый фон */
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+nav a:hover {
+    background: #bdbdbd; /* Более тёмный серый при наведении */
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.menu-container {
+    margin-left: auto;
+    /* margin: auto; */
+    position: absolute;
+    width: 100px;
+    height: 60px;
+    perspective: 1000px; 
+    transform: rotateX(0deg) rotateY(10deg);
+}
+
+.menu-cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
+    transition: 0.1s;
+    z-index: 2;
+}
+
+.menu-cube .face {
+    background: #bdbdbd; /* Серый цвет */
+    font-size: 12px;
+    border: 0px solid #fff;
+}
+
+.menu-label {
+    position: relative;
+    top: 60%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 2;
+    white-space: nowrap;
+}
+
+nav li:hover .menu-cube {
+    animation: cubeSpin 4s linear infinite;
+}
+
+nav li:hover .menu-cube .face {
+    background: #757575; /* Тёмно-серый цвет при наведении */
+}
+
+@keyframes cubeSpin {
+    0% {
+        transform: rotateX(35deg) rotateY(45deg) rotateZ(0deg);
+    }
+    25% {
+        transform: rotateX(35deg) rotateY(45deg) rotateZ(45deg);
+    }
+    50% {
+        transform: rotateX(35deg) rotateY(45deg) rotateZ(90deg);
+    }
+    75% {
+        transform: rotateX(35deg) rotateY(45deg) rotateZ(45deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(45deg) rotateZ(0deg);
+    }
+}
+
+main {
+    height: calc(100vh - 160px);
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    perspective: 800px;
+    overflow: hidden;
+    position: relative;
+    padding: 40px;
+    background: #f5f5f5; /* Светло-серый фон */
+}
+
+.sections-container {
+    width: 1000px;
+    height: 700px;
+    
+    box-sizing: border-box;
+    
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s ease;
+    transform-origin: center center;
+}
+
+.section {
+    position: absolute;
+    width: 100%;
+    height: 500px;
+    top: 0;
+    left: 0;
+    display: flex; /* Используем Flexbox для центровки содержимого */
+    justify-content: center; /* Центрируем содержимое по горизонтали */
+    align-items: center; /* Центрируем содержимое по вертикали */
+    box-sizing: border-box;
+    background: #ffffff;
+    backface-visibility: hidden;
+    transform-origin: center center;
+    opacity: 0.5;
+    transition: opacity 0.5s, transform 2s, visibility 0s;
+    visibility: hidden;
+}
+
+.section.active {
+    opacity: 1;
+    visibility: visible !important;
+}
+
+#events-section {
+    margin-top: 20px;
+}
+
+.event {
+    background: #444;
+    color: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+/* Стили для списка событий */
+.events-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px; /* Максимальная высота списка (примерно 5 элементов) */
+    overflow-y: auto; /* Вертикальная прокрутка */
+}
+
+.event-item {
+    background: #444;
+    color: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+/* Стили для контейнера деталей события */
+/* Стили для контейнера деталей события */
+.event-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+/* Стили для изображений в контейнере */
+.event-details img {
+    max-width: 100%;
+    max-height: 400px; /* Ограничиваем максимальную высоту */
+    height: auto;
+    width: auto; /* Устанавливаем ширину автоматически */
+    border-radius: 5px;
+    margin-top: 20px;
+    overflow: auto; /* Добавляем прокрутку для изображения */
+}
+
+/* Центрируем кнопку возврата */
+.event-details button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #e0e0e0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.event-details button:hover {
+    background: #bdbdbd;
+}
+
+/* Убедимся, что секция event-details видима */
+.event-details-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+
+.event-item:hover {
+    background: #555;
+}
+
+.event-item h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.event-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+footer {
+    background: #333;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+/* Добавленные новые стили для красочного дизайна */
+
+/* 1. Анимированный градиентный фон для header */
+/* @keyframes headerGradient {
+    0% { background: linear-gradient(45deg, #ff6b6b, #f7d794); }
+    50% { background: linear-gradient(45deg, #f7d794, #e77f67); }
+    100% { background: linear-gradient(45deg, #e77f67, #ff6b6

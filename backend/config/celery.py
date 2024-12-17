@@ -1,11 +1,13 @@
 import os
 from celery import Celery
 import logging
+# from celery. import crontab
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 app = Celery('config', broker='redis://localhost:6379/1',
              backend='redis://localhost:6379/1', include=['videoanal.tasks'])
+
 
 # Настройка логирования
 celery_logger = logging.getLogger('celery')

@@ -1,3 +1,4 @@
+from pathlib import Path
 from django.core.management.base import BaseCommand
 import cv2
 import time
@@ -67,14 +68,16 @@ class Command(BaseCommand):
             current_time = time.time()
             if current_time - last_capture >= interval:
                 # Сохранение кадра
-                daily_dir = os.path.join(settings.MEDIA_ROOT, 'frames', datetime.now().strftime('%Y-%m-%d'))
-                os.makedirs(daily_dir, exist_ok=True)
+                frames_dir = Path('frames')
+                daily_dir = frames_dir/ datetime.now().strftime('%Y-%m-%d')
+                # daily_dir = os.path.join(settings.MEDIA_ROOT, 'frames', datetime.now().strftime('%Y-%m-%d'))
+                os.makedirs(settings.MEDIA_ROOT / daily_dir, exist_ok=True)
                 filename = datetime.now().strftime("%H%M%S%f") + ".jpg"
-                frame_path = os.path.join(daily_dir, filename)
-                cv2.imwrite(frame_path, frame)
+                frame_path = daily_dir / filename
+                cv2.imwrite(settings.MEDIA_ROOT / frame_path, frame)
 
                 # Отправка задачи Celery
-                analyze_frame_task.delay_on_commit(frame_path)
+                analyze_frame_task.delay(str(frame_path))
                 logger.info(f"Захвачен и отправлен кадр: {frame_path}")
 
                 last_capture = current_time

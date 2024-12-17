@@ -1,0 +1,35 @@
+B:.
+|   .env.example
+|   manage.py
+|
++---config
+|       asgi.py
+|       celery.py
+|       settings.py
+|       urls.py
+|       wsgi.py
+|       __init__.py
+|
+\---videoanal
+    |   admin.py
+    |   apps.py
+    |   detection.py
+    |   models.py
+    |   serializers.py
+    |   tasks.py
+    |   telegram_utils.py
+    |   tests.py
+    |   urls.py
+    |   views.py
+    |   __init__.py
+    |
+    +---management
+    |   \---commands
+    |           capture_stream.py
+    |
+    +---migrations
+    |       0001_initial.py
+    |       __init__.py
+    |
+    \---tests
+            t_detection.py
